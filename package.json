@@ -1,0 +1,22 @@
+{
+  "name": "keboola-ex-dropbox",
+  "version": "2.0.0",
+  "description": "Dropbox Extractor for Keboola Connection (API v2)",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "Dropbox",
+    "Keboola"
+  ],
+  "author": "Radek Tomasek <radek.tomasek@gmail.com>",
+  "license": "NONE",
+  "dependencies": {
+    "commander": "^2.8.1",
+    "dropbox": "^2.5.0",
+    "fast-csv": "^0.6.0",
+    "is-there": "^4.0.0",
+    "lodash": "^3.10.1",
+    "nconf": "^0.7.2",
+    "q": "^1.4.1"
+  }
+}
