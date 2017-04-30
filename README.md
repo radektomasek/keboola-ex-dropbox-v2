@@ -4,24 +4,35 @@ Implementation focused on CSV extraction from Dropbox (https://www.dropbox.com/d
 
 ## Required params
 
-* OAuth 2 access token (credentials) - generated via OAuth handler in KBC.
-* KBC Bucket (bucket) - an input bucket from KBC.
 * CSV files from Dropbox (files) - an array of CSV files selected in Keboola Connection GUI.
+* KBC Bucket (bucket) - an input bucket from KBC.
 
-## Implemented API endpoints
+## Implementation details
 
-The main purpose of this extractor is to download CSV files from Dropbox.
-
-* POST /search - Retrieves files based on defined param (query=csv). Output is handled automatically based on the file name and its manifest. If any file is stored in any Dropbox subdirectory then underscore is applied as the part of the name.
+The main purpose of this extractor is to provide a very convenient way how to extract data from Dropbox and upload them to Keboola Connection Storage.
+It utilizes the [Chooser](https://www.dropbox.com/developers/chooser) component which provides a very easy-to-use way how to authorize and select files from your Dropbox.
+After files are selected, the configuration contains secured links which help to download the data.
+Chooser component is set to only consider CSV files for the selection.
 
 ## Configuration
 
     {
       "parameters": {
         "config": {
-          "files": ["/fileName1.csv", "/Subdirectory/fileName3.csv", "/fileName2.csv"],
-          "bucket": "bucket name for storing the files",
-          "credentials": "oauth secured token"
+          "dropboxFiles": [
+            {
+              "link": "https://dl.dropboxusercontent.com/1/view/kdfsjfhvtuyrr/file1.csv",
+              "name": "file1.csv",
+              "bucket": "in.c-test",
+              "output": "in.c-test.file1"
+            },
+            {
+              "link": "https://dl.dropboxusercontent.com/1/view/kdfsjfhvtuyxx/file2.csv",
+              "name": "file2.csv",
+              "bucket": "in.c-test",
+              "output": "in.c-test.file2"
+            }
+          ]
         }
       }
     }

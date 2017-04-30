@@ -1,19 +1,28 @@
-var _ = require('lodash')
-var Q = require('q')
-var Dropbox = require('dropbox')
-var path = require('path')
+import path from 'path'
+import command from './lib/helpers/cliHelper'
+import * as constants from './lib/constants'
+import * as keboolaHelper from './lib/helpers/keboolaHelper'
+import * as downloadHelper from './lib/helpers/downloadHelper'
 
-var DropboxHelper = require('./lib/dropboxHelper')
+/**
+ * This is the main part of the program.
+ */
+(async() => {
+  try {
+    // Read the input configuration.
+    const dataDir = command.data
+    const { inputFiles, extractDirectory } = await keboolaHelper
+      .parseConfiguration(keboolaHelper.getConfig(path.join(dataDir, constants.CONFIG_FILE)), dataDir)
 
-DropboxHelper.userAuthenticate()
-  .then(DropboxHelper.listCsvFiles)
-  .then(DropboxHelper.buildPromises)
-  .then(DropboxHelper.processArrayOfPromises)
-  .then(function(object) {
-    console.log(object.length + ' file(s) uploaded successfully!')
+    // This is going to download all files from the Dropbox
+    await Promise.all(downloadHelper.downloadFiles(inputFiles, extractDirectory))
+    // This is going to create manifests.
+    await Promise.all(downloadHelper.writeDataToManifests(inputFiles, extractDirectory))
+
+    console.log(`Success: ${inputFiles.length} files from Dropbox extracted and uploaded into KBC storage!`)
     process.exit(0)
-  })
-  .catch(function(error){
+  } catch (error) {
     console.error(error)
     process.exit(1)
-  })
+  }
+})()
