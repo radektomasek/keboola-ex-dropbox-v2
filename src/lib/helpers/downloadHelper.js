@@ -31,7 +31,7 @@ const downloadFile = (dropboxObject, downloadDir) => {
  */
 export const writeDataToManifests = (dropboxObjects, downloadDir) => {
   return dropboxObjects.map(dropboxObject => {
-    return createManifestFile(`${path.join(downloadDir, dropboxObject.name)}.manifest`, { destination: dropboxObject.output })
+    return createManifestFile(`${path.join(downloadDir, dropboxObject.name)}.manifest`, { incremental: false })
   })
 }
 
