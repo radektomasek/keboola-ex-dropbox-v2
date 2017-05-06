@@ -22,7 +22,7 @@ const downloadFile = (dropboxObject, downloadDir) => {
   return promiseStreams.wait(
     request
       .get(dropboxObject.link.replace('dl=0', 'dl=1'))
-      .pipe(fs.createWriteStream(path.join(downloadDir, dropboxObject.name)))
+      .pipe(fs.createWriteStream(path.join(downloadDir, `${dropboxObject.output}.csv`)))
   )
 }
 
@@ -31,7 +31,7 @@ const downloadFile = (dropboxObject, downloadDir) => {
  */
 export const writeDataToManifests = (dropboxObjects, downloadDir) => {
   return dropboxObjects.map(dropboxObject => {
-    return createManifestFile(`${path.join(downloadDir, dropboxObject.name)}.manifest`, { incremental: false })
+    return createManifestFile(`${path.join(downloadDir, `${dropboxObject.output}.csv`)}.manifest`, { incremental: false })
   })
 }
 
