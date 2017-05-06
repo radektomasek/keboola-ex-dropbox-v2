@@ -21,7 +21,7 @@ export const downloadFiles = (dropboxObjects = [], downloadDir) => {
 const downloadFile = (dropboxObject, downloadDir) => {
   return promiseStreams.wait(
     request
-      .get(dropboxObject.link.replace('dl=0', 'dl=1'))
+      .get(dropboxObject['#link'].replace('dl=0', 'dl=1'))
       .pipe(fs.createWriteStream(path.join(downloadDir, `${dropboxObject.output}.csv`)))
   )
 }

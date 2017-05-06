@@ -11,6 +11,11 @@ Implementation focused on CSV extraction from Dropbox (https://www.dropbox.com/d
 
 The main purpose of this extractor is to provide a very convenient way how to extract data from Dropbox and upload them to Keboola Connection Storage.
 It utilizes the [Chooser](https://www.dropbox.com/developers/chooser) component which provides a very easy-to-use way how to authorize and select files from your Dropbox.
+
+
+Link itself is stored in encrypted form.
+
+
 After files are selected, the configuration contains secured links which help to download the data.
 Chooser component is set to only consider CSV files for the selection.
 
@@ -21,16 +26,16 @@ Chooser component is set to only consider CSV files for the selection.
         "config": {
           "dropboxFiles": [
             {
-              "link": "https://dl.dropboxusercontent.com/1/view/kdfsjfhvtuyrr/file1.csv",
+              "#link": "KBC::Encrypted==ENCODEDSTRING==",
               "name": "file1.csv",
               "bucket": "in.c-test",
-              "output": "in.c-test.file1"
+              "output": "file1"
             },
             {
-              "link": "https://dl.dropboxusercontent.com/1/view/kdfsjfhvtuyxx/file2.csv",
+              "#link": "KBC::Encrypted==ENCODEDSTRING==",
               "name": "file2.csv",
               "bucket": "in.c-test",
-              "output": "in.c-test.file2"
+              "output": "file2"
             }
           ]
         }
